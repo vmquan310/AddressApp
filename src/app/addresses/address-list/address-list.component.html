@@ -1,0 +1,35 @@
+<div class="text-center">
+  <h2 class="jumbotron">Address Application</h2>
+</div>
+<h5 class="text-center">Address List</h5>
+<table class="table table-sm table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Street</th>
+      <th scope="col">Ward</th>
+      <th scope="col">District</th>
+      <th scope="col">City</th>
+      <th scope="col">Country</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let address of addresses">
+      <td>{{address.streetName}}</td>
+      <td>{{address.ward}}</td>
+      <td>{{address.district}}</td>
+      <td>{{address.city}}</td>
+      <td>{{address.country}}</td>
+      <td>
+        <a class="btn" data-toggle="modal" data-target="#exampleModal">
+          <i class="fa fa-pencil" (click)="onEdit(address)"></i>
+        </a>
+        <a class="btn">
+          <i class="fa fa-trash-o" (click)="delete(address)"></i>
+        </a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div class="text-center">
+  <button type="button" class="btn btn-primary" routerLink = "/addressform"><i class="fa fa-floppy-o"></i> Add Address</button>
+</div>

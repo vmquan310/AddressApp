@@ -1,0 +1,45 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4">
+      <form #addressForm="ngForm" (ngSubmit)="onSubmit(addressForm)">
+        <div class="form-group">
+          <label>Street Name</label>
+          <input class="form-control" name="streetName" [(ngModel)]="streetName" required>
+        </div>
+        <div class="form-group">
+          <label>Ward</label>
+          <input class="form-control" name="ward" [(ngModel)]="ward">
+        </div>
+        <div class="form-group">
+          <label>District</label>
+          <input class="form-control" name="district" [(ngModel)]="district">
+        </div>
+        <div class="form-group">
+          <label>City</label>
+          <input class="form-control" name="city" [(ngModel)]="city">
+        </div>
+        <div class="form-group">
+          <label>Country</label>
+          <input class="form-control" name="country" [(ngModel)]="country">
+        </div>
+        <div class="form-group">
+          <button class="btn btn-default btn-block" type="submit" [disabled]="!addressForm.valid">
+            <i class="fa fa-floppy-o"></i>
+            Submit</button>
+          <button class="btn btn-default btn-block" type="button" (click)="resetForm(addressForm)">
+            <i class="fa fa-repeat"></i>
+            Reset</button>
+          <button class="btn btn-default btn-block" type="button" routerLink = "/addresslist">
+            <i class="fa fa-home"></i>
+            Home</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-8">
+      <div class="text-center">
+        <h5>Google Map</h5>
+        <app-map (onTest)='getAddressInfo($event)'></app-map>
+      </div>
+    </div>
+  </div>
+</div>

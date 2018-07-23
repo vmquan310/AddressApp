@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
+import { AddressService } from '../../service/address.service'
+import { Address } from '../../service/address.model';
+
 @Component({
   selector: 'app-address-list',
   templateUrl: './address-list.component.html',
@@ -7,9 +10,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddressListComponent implements OnInit {
 
-  constructor() { }
+  addresses: Address[]
+  constructor(private addressService: AddressService) { }
 
   ngOnInit() {
+    this.getAddresses();
   }
 
+  getAddresses() {
+    this.addressService.getAddresses().subscribe(data => {
+      this.addresses = data;
+    })
+  }
+
+  onEdit(address) {
+    // this.addressService.selectedAddress = Object.assign({}, address);
+  }
+
+  deleteAddress(address: Address) {
+    var agree = confirm("Are you sure you want to delete this file?");
+    if (agree == true) {
+      this.addresses = this.addresses.filter(h => h !== address);
+      this.addressService.deleteAddress(address).subscribe();
+    }
+    else {
+      return false;
+    }
+  }
 }

@@ -20,11 +20,11 @@
       <td>{{address.city}}</td>
       <td>{{address.country}}</td>
       <td>
-        <a class="btn" data-toggle="modal" data-target="#exampleModal">
-          <i class="fa fa-pencil" (click)="onEdit(address)"></i>
+        <a class="btn">
+          <i class="fa fa-pencil" (click)="onEdit(address)" routerLink = "/addressform"></i>
         </a>
         <a class="btn">
-          <i class="fa fa-trash-o" (click)="delete(address)"></i>
+          <i class="fa fa-trash-o" (click)="deleteAddress(address)"></i>
         </a>
       </td>
     </tr>

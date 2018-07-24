@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { AddressService } from '../../service/address.service'
 import { Address } from '../../service/address.model';
+import { Angular5Csv } from 'angular5-csv/Angular5-csv';
 
 @Component({
   selector: 'app-address-list',
@@ -36,5 +37,11 @@ export class AddressListComponent implements OnInit {
     else {
       return false;
     }
+  }
+
+  download() {
+    this.addressService.getAddresses().subscribe(data=>{
+      new Angular5Csv(data, 'Address List');
+    });
   }
 }

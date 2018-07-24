@@ -29,9 +29,12 @@
           <button class="btn btn-default btn-block" type="button" (click)="resetForm(addressForm)">
             <i class="fa fa-repeat"></i>
             Reset</button>
-          <button class="btn btn-default btn-block" type="button" routerLink = "/addresslist">
+          <button class="btn btn-default btn-block" type="button" routerLink="/addresslist">
             <i class="fa fa-home"></i>
             Home</button>
+          <button class="btn btn-default btn-block" type="button"  (click)="getCurrentLocation()">
+            <i class="fa fa-map-marker"></i>
+            Get current location</button>
         </div>
       </form>
     </div>

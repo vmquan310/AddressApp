@@ -4,7 +4,7 @@
       <form #addressForm="ngForm" (ngSubmit)="onSubmit(addressForm)">
         <div class="form-group">
           <label>Street Name</label>
-          <input class="form-control" name="streetName" [(ngModel)]="address.streetName" required>
+          <input class="form-control" name="streetName" [(ngModel)]="address.streetName" (blur) = "onViewMap()" required>
         </div>
         <div class="form-group">
           <label>Ward</label>
@@ -41,7 +41,7 @@
     <div class="col-md-8">
       <div class="text-center">
         <h5>Google Map</h5>
-        <app-map (onTest)='getAddressInfo($event)'></app-map>
+        <app-map #appMap (onTest)='getAddressInfo($event)'></app-map>
       </div>
     </div>
   </div>

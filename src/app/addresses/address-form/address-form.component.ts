@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms'
-import { google } from '@agm/core/services/google-maps-types';
 
 import { AddressService } from '../../service/address.service'
 import { Address } from '../../service/address.model';
@@ -15,20 +14,29 @@ import { MapService } from '../../service/map.service';
 })
 export class AddressFormComponent implements OnInit {
 
+  @ViewChild('appMap') appMap;
   address: Address = new Address();
   addresses: Array<Address> = new Array<Address>();
+  lat: number;
+  lng: number;
 
   constructor(private addressService: AddressService, private mapService: MapService) {
   }
 
   ngOnInit() {
-    // var geocoder = new google.maps.Geocoder();
   }
-  
+
+  onViewMap(){
+    this.getLatLng(this.address.streetName);
+  }
+
 
   onSubmit(addressForm: NgForm) {
     this.createAddress(addressForm.value);
-    //this.test();
+    console.log(this.address.streetName);
+    this.getLatLng(this.address.streetName);
+    console.log(this.lat);
+    console.log(this.lng);
   }
 
   getAddressInfo(data) {
@@ -38,6 +46,18 @@ export class AddressFormComponent implements OnInit {
     this.address.city = data.address_components[4].long_name;
     this.address.country = data.address_components[5].long_name;
     this.addressService.selectedAddress = this.address;
+  }
+
+  getLatLng(address) {
+    this.mapService.getLatLng(address).subscribe(data => {
+      this.lat = data.results[0].geometry.location.lat;
+      this.lng = data.results[0].geometry.location.lng;
+
+      this.address.district = data.results[0].address_components[2].long_name;
+      this.address.city = data.results[0].address_components[3].long_name;
+      this.address.country = data.results[0].address_components[4].long_name;
+      this.appMap.getMark(this.lat, this.lng)
+    })
   }
 
   resetForm(addressForm?: NgForm) {
@@ -61,29 +81,6 @@ export class AddressFormComponent implements OnInit {
     })
   }
 
-  getLatitudeLongitude(callback, address) {
-    // If adress is not supplied, use default value 'Viet Nam'
-    address = address || 'Vietnam';
-    // Initialize the Geocoder
-    var geocoder = new google.maps.Geocoder();
-    if (geocoder) {
-      geocoder.geocode({ 'address': address }, function (results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          callback(results[0]);
-        }
-      });
-    }
-  }
-
-  showResult(result) {
-    console.log(result.geometry.location.lat());
-    console.log(result.geometry.location.lng());
-  }
-
-  test(){
-    var tmpAddress = this.address;
-    this.getLatitudeLongitude(this.showResult, tmpAddress)
-  }
 
   getCurrentLocation() {
     navigator.geolocation.getCurrentPosition((location) => {

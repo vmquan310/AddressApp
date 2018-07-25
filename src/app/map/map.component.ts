@@ -17,6 +17,7 @@ export class MapComponent implements OnInit {
 
   lat: number = 10.801356879681844;
   lng: number = 106.65363127668411;
+  zoom: number = 10;
   locationChosen = false;
   addressInfo: string
 
@@ -31,6 +32,13 @@ export class MapComponent implements OnInit {
         this.addressInfo
       )
     })
+  }
+
+  getMark(lat, lng) {
+    this.lat = lat;
+    this.lng = lng;
+    this.zoom = 18;
+    this.locationChosen = true;
   }
 
 }

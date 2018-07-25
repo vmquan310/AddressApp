@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms'
+import { google } from '@agm/core/services/google-maps-types';
 
 import { AddressService } from '../../service/address.service'
 import { Address } from '../../service/address.model';
 import { MapService } from '../../service/map.service';
+
+
 
 @Component({
   selector: 'app-address-form',
@@ -19,10 +22,13 @@ export class AddressFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    // var geocoder = new google.maps.Geocoder();
   }
+  
 
   onSubmit(addressForm: NgForm) {
     this.createAddress(addressForm.value);
+    //this.test();
   }
 
   getAddressInfo(data) {
@@ -53,6 +59,30 @@ export class AddressFormComponent implements OnInit {
       alert('create successfully!');
       this.address = new Address();
     })
+  }
+
+  getLatitudeLongitude(callback, address) {
+    // If adress is not supplied, use default value 'Viet Nam'
+    address = address || 'Vietnam';
+    // Initialize the Geocoder
+    var geocoder = new google.maps.Geocoder();
+    if (geocoder) {
+      geocoder.geocode({ 'address': address }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          callback(results[0]);
+        }
+      });
+    }
+  }
+
+  showResult(result) {
+    console.log(result.geometry.location.lat());
+    console.log(result.geometry.location.lng());
+  }
+
+  test(){
+    var tmpAddress = this.address;
+    this.getLatitudeLongitude(this.showResult, tmpAddress)
   }
 
   getCurrentLocation() {
